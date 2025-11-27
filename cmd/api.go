@@ -1,7 +1,17 @@
 package main
 
+import (
+	"net/http"
+
+	"github.com/go-chi/chi/v5"
+)
+
 type application struct {
 	config config
+}
+
+func (api *application) mount() http.Handler {
+	r := chi.NewRouter()
 }
 
 type config struct {
