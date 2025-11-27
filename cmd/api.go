@@ -8,11 +8,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-type application struct {
-	config config
-}
-
-func (api *application) mount() http.Handler {
+func (app *application) mount() http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
@@ -22,11 +18,27 @@ func (api *application) mount() http.Handler {
 
 	r.Use(middleware.Timeout(60 * time.Second))
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("root."))
 	})
 
 	return r
+}
+
+func (app *application) run(h http.Handler) error {
+	srv := &http.Server{
+		Addr:         app.config.addr,
+		Handler:      h,
+		WriteTimeout: time.Second * 30,
+		ReadTimeout:  time.Second * 10,
+		IdleTimeout:  time.Minute * 1,
+	}
+
+	return srv.ListenAndServe()
+}
+
+type application struct {
+	config config
 }
 
 type config struct {
