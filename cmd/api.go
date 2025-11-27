@@ -25,18 +25,6 @@ func (app *application) mount() http.Handler {
 	return r
 }
 
-func (app *application) run(h http.Handler) error {
-	srv := &http.Server{
-		Addr:         app.config.addr,
-		Handler:      h,
-		WriteTimeout: time.Second * 30,
-		ReadTimeout:  time.Second * 10,
-		IdleTimeout:  time.Minute * 1,
-	}
-
-	return srv.ListenAndServe()
-}
-
 type application struct {
 	config config
 }
