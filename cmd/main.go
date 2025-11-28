@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"log/slog"
 	"os"
 
@@ -22,7 +21,7 @@ func main() {
 
 	conn, err := pgx.Connect(ctx, cfg.db.dsn)
 	if err != nil {
-		log.Println(err)
+		os.Exit(1)
 	}
 	defer conn.Close(ctx)
 
