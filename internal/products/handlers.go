@@ -20,6 +20,8 @@ func NewHandler(service Service) *handler {
 func (h *handler) ListProducts(w http.ResponseWriter, r *http.Request) {
 	if err := h.service.ListProducts(r.Context()); err != nil {
 		log.Error(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	products := []string{}
