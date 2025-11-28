@@ -26,7 +26,7 @@ func (app *application) mount() http.Handler {
 		w.Write([]byte("root."))
 	})
 
-	productsService := products.NewService(repo.New(app.db))
+	productsService := products.NewService())
 	productsHandler := products.NewHandler(productsService)
 	r.Get("/products", productsHandler.ListProducts)
 
