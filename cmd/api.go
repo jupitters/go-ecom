@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/jupitters/go-ecom/internal/products"
 )
 
 func (app *application) mount() http.Handler {
@@ -22,6 +23,9 @@ func (app *application) mount() http.Handler {
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("root."))
 	})
+
+	productsHandler := products.NewHandler(nil)
+	r.Get("/products", productsHandler.ListProducts)
 
 	return r
 }

@@ -12,6 +12,6 @@ func NewHandler(service Service) *handler {
 	}
 }
 
-func (h *handler) ListProducts(w http.ResponseWriter, r http.Request) {
+func (h *handler) ListProducts(w http.ResponseWriter, r *http.Request) {
 
 }
