@@ -15,13 +15,13 @@ func main() {
 	cfg := config{
 		addr: ":8080",
 		db: dbConfig{
-			dsn: env.GetString("GOOSE_DBSTRING", "host=localhost user=postgres password=postgres dbname=ecom sslmode=disabled"),
+			dsn: env.GetString("GOOSE_DBSTRING", "host=localhost user=postgres password=postgres dbname=ecom sslmode=disable"),
 		},
 	}
 
 	conn, err := pgx.Connect(ctx, cfg.db.dsn)
 	if err != nil {
-		os.Exit(1)
+		panic(err)
 	}
 	defer conn.Close(ctx)
 
