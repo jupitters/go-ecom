@@ -1,8 +1,9 @@
 package products
 
 import (
-	"encoding/json"
 	"net/http"
+
+	myjson "github.com/jupitters/go-ecom/internal/json"
 )
 
 type handler struct {
@@ -18,7 +19,5 @@ func NewHandler(service Service) *handler {
 func (h *handler) ListProducts(w http.ResponseWriter, r *http.Request) {
 	products := []string{}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(products)
+	myjson.Write(w, http.StatusOK, products)
 }
