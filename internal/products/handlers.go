@@ -28,3 +28,7 @@ func (h *handler) ListProducts(w http.ResponseWriter, r *http.Request) {
 
 	myjson.Write(w, http.StatusOK, products)
 }
+
+func (h *handler) GetProductById(w http.ResponseWriter, r *http.Request) {
+
+}
