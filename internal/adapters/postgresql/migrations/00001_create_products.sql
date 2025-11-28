@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS products (
 
 -- +goose Down
 -- +goose StatementBegin
-
+DROP TABLE PRODUCTS;
 -- +goose StatementEnd
