@@ -27,6 +27,7 @@ func main() {
 
 	api := application{
 		config: cfg,
+		db:     conn,
 	}
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
