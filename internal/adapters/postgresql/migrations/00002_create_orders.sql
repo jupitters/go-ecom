@@ -18,5 +18,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 
 -- +goose Down
 -- +goose StatementBegin
-SELECT 'down SQL query';
+DROP TABLE IF EXISTS order_items;
+
+DROP TABLE IF EXISTS orders;
 -- +goose StatementEnd
