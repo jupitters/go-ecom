@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS order_items (
     quantity INTEGER NOT NULL,
     price_cents INTEGER NOT NULL,
     CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders(id)
-)
+);
 -- +goose StatementEnd
 
 -- +goose Down
