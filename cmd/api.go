@@ -30,6 +30,9 @@ func (app *application) mount() http.Handler {
 	productsHandler := products.NewHandler(productsService)
 	r.Get("/products", productsHandler.ListProducts)
 
+	ordersHandler := orders.NewHandler(nil)
+	r.Post("/orders", ordersHandler.PlaceOrder)
+
 	return r
 }
 
