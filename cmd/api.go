@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jackc/pgx/v5"
 	repo "github.com/jupitters/go-ecom/internal/adapters/postgresql/sqlc"
+	"github.com/jupitters/go-ecom/internal/orders"
 	"github.com/jupitters/go-ecom/internal/products"
 )
 
