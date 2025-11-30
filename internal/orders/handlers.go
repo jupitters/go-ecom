@@ -11,6 +11,12 @@ type handler struct {
 	service Service
 }
 
+func NewHandler(service Service) *handler {
+	return &handler{
+		service: service,
+	}
+}
+
 func (h *handler) PlaceOrder(w http.ResponseWriter, r *http.Request) {
 	var tempOrder createOrderParams
 	if err := myjson.Read(r, &tempOrder); err != nil {
