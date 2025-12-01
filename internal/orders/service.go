@@ -2,10 +2,15 @@ package orders
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
 	repo "github.com/jupitters/go-ecom/internal/adapters/postgresql/sqlc"
+)
+
+var (
+	ErrProductNotFound = errors.New("product not found!")
 )
 
 type svc struct {
@@ -41,4 +46,10 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 		return repo.Order{}, err
 	}
 
+	for _, item := range tempOrder.Items {
+		product, err := s.repo.FindProductByID(ctx, item.ProductID)
+		if err != nil {
+			return repo.Order{}, ErrProductNotFound
+		}
+	}
 }
