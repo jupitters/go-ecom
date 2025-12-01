@@ -4,16 +4,19 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/jackc/pgx/v5"
 	repo "github.com/jupitters/go-ecom/internal/adapters/postgresql/sqlc"
 )
 
 type svc struct {
 	repo *repo.Queries
+	db   *pgx.Conn
 }
 
-func NewService(repo *repo.Queries) Service {
+func NewService(repo *repo.Queries, db *pgx.Conn) Service {
 	return &svc{
 		repo: repo,
+		db:   db,
 	}
 }
 
@@ -25,4 +28,10 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 		return repo.Order{}, fmt.Errorf("At least one item is required!")
 	}
 
+	tx, err := db.Begin(ctx)
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback(ctx)
+	qtx := queries.WithTx(tx)
 }
