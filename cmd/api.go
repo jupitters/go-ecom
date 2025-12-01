@@ -8,9 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jackc/pgx/v5"
-	repo "github.com/jupitters/go-ecom/internal/adapters/postgresql/sqlc"
 	"github.com/jupitters/go-ecom/internal/orders"
-	"github.com/jupitters/go-ecom/internal/products"
 )
 
 func (app *application) mount() http.Handler {
@@ -22,14 +20,6 @@ func (app *application) mount() http.Handler {
 	r.Use(middleware.Recoverer)
 
 	r.Use(middleware.Timeout(60 * time.Second))
-
-	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("root."))
-	})
-
-	productsService := products.NewService(repo.New(app.db))
-	productsHandler := products.NewHandler(productsService)
-	r.Get("/products", productsHandler.ListProducts)
 
 	ordersHandler := orders.NewHandler(nil)
 	r.Post("/orders", ordersHandler.PlaceOrder)
