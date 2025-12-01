@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	ErrProductNotFound = errors.New("product not found!")
-	ErrProductNoStock  = errors.New("product not on stock!")
+	ErrProductNotFound = errors.New("product not found")
+	ErrProductNoStock  = errors.New("product not on stock")
 )
 
 type svc struct {
@@ -28,10 +28,10 @@ func NewService(repo *repo.Queries, db *pgx.Conn) Service {
 
 func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo.Order, error) {
 	if tempOrder.CustomerID == 0 {
-		return repo.Order{}, fmt.Errorf("CustomerID is required!")
+		return repo.Order{}, fmt.Errorf("customerID is required")
 	}
 	if len(tempOrder.Items) == 0 {
-		return repo.Order{}, fmt.Errorf("At least one item is required!")
+		return repo.Order{}, fmt.Errorf("at least one item is required")
 	}
 
 	tx, err := s.db.Begin(ctx)
