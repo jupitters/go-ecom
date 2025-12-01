@@ -48,7 +48,7 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 	}
 
 	for _, item := range tempOrder.Items {
-		product, err := s.repo.FindProductByID(ctx, item.ProductID)
+		product, err := qtx.FindProductByID(ctx, item.ProductID)
 		if err != nil {
 			return repo.Order{}, ErrProductNotFound
 		}
@@ -56,5 +56,13 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 		if product.Quantity < item.Quantity {
 			return repo.Order{}, ErrProductNoStock
 		}
+
+		_, err = qtx.CreatOrderItem(ctx, repo.CreatOrderItemParams{
+			OrderID:    order.ID,
+			ProductID:  item.ProductID,
+			Quantity:   item.Quantity,
+			PriceCents: product.PriceInCenters,
+		})
 	}
+
 }
