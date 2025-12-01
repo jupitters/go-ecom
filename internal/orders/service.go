@@ -30,8 +30,15 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 
 	tx, err := s.db.Begin(ctx)
 	if err != nil {
-		return err
+		return repo.Order{}, err
 	}
 	defer tx.Rollback(ctx)
-	qtx := queries.WithTx(tx)
+
+	qtx := s.repo.WithTx(tx)
+
+	order, err := qtx.CreateOrder(ctx, tempOrder.CustomerID)
+	if err != nil {
+		return repo.Order{}, err
+	}
+
 }
