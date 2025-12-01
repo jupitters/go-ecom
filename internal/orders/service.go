@@ -63,6 +63,10 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 			Quantity:   item.Quantity,
 			PriceCents: product.PriceInCenters,
 		})
+		if err != nil {
+			return repo.Order{}, err
+		}
 	}
 
+	return order, nil
 }
