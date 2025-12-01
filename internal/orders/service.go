@@ -11,6 +11,7 @@ import (
 
 var (
 	ErrProductNotFound = errors.New("product not found!")
+	ErrProductNoStock  = errors.New("product not on stock!")
 )
 
 type svc struct {
@@ -50,6 +51,10 @@ func (s *svc) PlaceOrder(ctx context.Context, tempOrder createOrderParams) (repo
 		product, err := s.repo.FindProductByID(ctx, item.ProductID)
 		if err != nil {
 			return repo.Order{}, ErrProductNotFound
+		}
+
+		if product.Quantity < item.Quantity {
+			return repo.Order{}, ErrProductNoStock
 		}
 	}
 }
